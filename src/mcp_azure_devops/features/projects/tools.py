@@ -121,3 +121,35 @@ def register_tools(mcp) -> None:
             return _get_projects_impl(core_client, state_filter, top)
         except AzureDevOpsClientError as e:
             return f"Error: {str(e)}"
+        
+    @mcp.tool()
+    def get_project(
+        project_id: str
+    ) -> str:
+        """
+        Retrieves a specific project by its ID.
+        
+        Use this tool when you need to:
+        - Get detailed information about a specific project
+        - Verify the existence of a project by its ID
+        
+        Args:
+            project_id: The ID of the project to retrieve
+            
+        Returns:
+            Formatted string containing project information including name,
+            ID, description, state, and visibility settings, formatted as
+            markdown with each project clearly separated
+        """
+        try:
+            core_client = get_core_client()
+            projects = core_client.get_projects()
+            
+            for project in projects:
+                if project.id == project_id:
+                    return _format_project(project)
+            
+            return f"Project with ID {project_id} not found."
+        
+        except AzureDevOpsClientError as e:
+            return f"Error: {str(e)}"
