@@ -101,7 +101,7 @@ class AzureDevOpsClient:
             
             # Create the pull request
             result = self.git_client.create_pull_request(
-                git_pull_request=pull_request,
+                git_pull_request_to_create=pull_request,
                 repository_id=self.repo,
                 project=self.project
             )
@@ -139,7 +139,7 @@ class AzureDevOpsClient:
             
             # Send the update
             result = self.git_client.update_pull_request(
-                git_pull_request=existing_pr,
+                git_pull_request_to_update=existing_pr,
                 repository_id=self.repo,
                 project=self.project,
                 pull_request_id=pull_request_id
